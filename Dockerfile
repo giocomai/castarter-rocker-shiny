@@ -26,6 +26,9 @@ RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubu
     rm -f version.txt ss-latest.deb && \
     R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cran.rstudio.com/')" && \
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/
+    
+# Install castarter packages in R
+RUN R -e "install.packages(c('ggplot2', 'stringi', 'mgcv', 'devtools'), repos='http://cran.rstudio.com/'); devtools::install_github('giocomai/castarter')"
 
 EXPOSE 3838
 
