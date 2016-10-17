@@ -1,5 +1,46 @@
-Docker for Shiny Server
-=======================
+Publishing an interactive version of a 'castarter' dataset
+==========================================================
+
+This is a Dockerfile based on a fork of [Rocker-Shiny](https://github.com/rocker-org/shiny). All information from the original readme are available at the bottom of this page.
+
+The Dockerfile has been changed to introduce install of packages required for `castarter`. 
+
+The folder "EuropeanParliament" serves as a template for quickly creating docker images to publish shinyApps of own datasets. 
+
+You can download/clone it, copy the app created by castarter's CreateShinyApp into the myApp folder (erasing any previous contents of myApp), and you are ready to go: you can build your Docker image, upload it to Docker Hub and deploy it immediately. 
+
+From within the EuropeanParliament folder (change 'EuropeanParliament' to whatever your project name, and place your username instead of 'giocomai'), run:
+
+```sh
+sudo docker build -t giocomai/EuropeanParliament .
+```
+
+Consider enabling the `--no-cache` flag, to make sure that `castarter` embedded in the docker image is its latest version.
+
+```sh
+sudo docker build -t --no-cache=true giocomai/EuropeanParliament .
+```
+
+You can then run then push the image to Docker Hun with:
+
+```sh
+sudo docker push giocomai/EuropeanParliament .
+```
+
+Or run it with:
+
+```sh
+sudo docker run giocomai/EuropeanParliament
+```
+
+If you wish to run it locally, consider publishing it on a separate port:
+
+```sh
+sudo docker run -p 8787:8787 giocomai/EuropeanParliament
+```
+
+Original README from rocker-shiny
+=================================
 
 This is a Dockerfile for Shiny Server on Debian "testing". It is based on the r-base image.
 
