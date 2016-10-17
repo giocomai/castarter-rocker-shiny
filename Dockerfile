@@ -19,16 +19,20 @@ RUN apt-get update && apt-get install -y \
 	r-cran-curl
 
 # Download and install shiny server
-RUN wget https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/VERSION -O "version.txt" && \
-    VERSION=$(cat version.txt)  && \
-    wget "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
+# Issues with download, temporary added direct link
+RUN wget "https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.4.7.815-amd64.deb" -O ss-latest.deb && \
     gdebi -n ss-latest.deb && \
-    rm -f version.txt ss-latest.deb && \
+    rm -f ss-latest.deb && \
     R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cran.rstudio.com/')" && \
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/
     
-# Install castarter packages in R
-RUN R -e "install.packages(c('ggplot2', 'stringi', 'mgcv', 'devtools'), repos='http://cran.rstudio.com/'); devtools::install_github('giocomai/castarter')"
+
+    
+## Install castarter packages
+RUN R -e "install.packages(c('ggplot2', 'stringi', 'mgcv', 'devtools'), repos='http://cran.rstudio.com/')" 
+
+## Install castarter
+RUN R -e "devtools::install_github('giocomai/castarter')"
 
 EXPOSE 3838
 
