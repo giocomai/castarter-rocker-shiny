@@ -29,7 +29,7 @@ RUN wget "https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.3.8
 
     
 ## Install castarter packages
-RUN R -e "install.packages(c('ggplot2', 'stringi', 'mgcv', 'devtools'), repos='http://cran.rstudio.com/')" 
+RUN R -e "install.packages(c('ggplot2', 'stringi', 'mgcv', 'devtools', 'tidyverse'), repos='http://cran.rstudio.com/')" 
 
 ## Install castarter
 RUN R -e "devtools::install_github('giocomai/castarter')"
