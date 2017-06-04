@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 
 # Download and install shiny server
 # Issues with download, temporary added direct link
-RUN wget "https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.4.7.815-amd64.deb" -O ss-latest.deb && \
+RUN wget "https://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.5.3.838-amd64.deb" -O ss-latest.deb && \
     gdebi -n ss-latest.deb && \
     rm -f ss-latest.deb && \
     R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cran.rstudio.com/')" && \
