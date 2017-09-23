@@ -5,39 +5,53 @@ This is a Dockerfile based on a fork of [Rocker-Shiny](https://github.com/rocker
 
 The Dockerfile has been changed to introduce install of packages required for `castarter`. 
 
-The folder "EuropeanParliament" serves as a template for quickly creating docker images to publish shinyApps of own datasets. 
+The folder `example` serves as a template for quickly creating docker images to publish shinyApps of own datasets.
 
-You can download/clone it, copy the app created by castarter's CreateShinyApp into the myApp folder (erasing any previous contents of myApp), and you are ready to go: you can build your Docker image, upload it to Docker Hub and deploy it immediately. 
-
-From within the EuropeanParliament folder (change 'EuropeanParliament' to whatever your project name, and place your username instead of 'giocomai'), run:
+## Serve an app
 
 ```sh
-sudo docker build -t giocomai/EuropeanParliament .
+docker run --rm -p 3838:3838 \
+    -v /path/to/your/app/folder/:/srv/shiny-server/ \
+    -v /srv/shinylog/:/var/log/ \
+    giocomai/castarter-rocker-shiny
+```
+
+## Run an example app
+
+```sh
+docker run  -v /srv/shinylog/:/var/log/ -p 3838:3838 giocomai/castarter-rocker-shiny-example
+```
+
+## Create your own Docker image
+
+You can download/clone it, copy the app created by castarter's CreateShinyApp into the myapp folder (erasing any previous contents of myapp), and you are ready to go: you can build your Docker image, upload it to Docker Hub and deploy it immediately. 
+
+From within the `example` folder (change `example` to whatever your project name, and place your username instead of 'giocomai'), run:
+
+```sh
+sudo docker build -t giocomai/example .
 ```
 
 Consider enabling the `--no-cache` flag, to make sure that `castarter` embedded in the docker image is its latest version.
 
 ```sh
-sudo docker build -t --no-cache=true giocomai/EuropeanParliament .
+docker build -t --no-cache giocomai/example .
 ```
 
-You can then run then push the image to Docker Hun with:
+You can then run then push the image to Docker Hub with:
 
 ```sh
-sudo docker push giocomai/EuropeanParliament .
+docker push giocomai/example .
 ```
 
 Or run it with:
 
 ```sh
-sudo docker run giocomai/EuropeanParliament
+docker run -p 3838:3838 giocomai/example
 ```
 
-If you wish to run it locally, consider publishing it on a separate port:
+The resulting shiny app will be available locally at http://0.0.0.0:3838/
 
-```sh
-sudo docker run -p 8787:8787 giocomai/EuropeanParliament
-```
 
 Original README from rocker-shiny
 =================================
